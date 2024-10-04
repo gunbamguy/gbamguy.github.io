@@ -379,6 +379,7 @@ function updateTextColor(value) {
 }
 
 // 선택된 룬들을 페이지 레이아웃과 동일하게 PNG으로 내보내기
+// 선택된 룬들을 페이지 레이아웃과 동일하게 PNG으로 내보내기
 function exportRunes(type) {
     console.log(`Exporting runes: ${type}`);
 
@@ -453,9 +454,15 @@ function exportRunes(type) {
     // 기본 상하 여백 설정 (텍스트가 없는 경우에도 적용)
     const verticalPadding = text ? 0 : defaultVerticalPadding;
 
+    // **추가된 부분: 텍스트가 있는 경우 이미지 아래쪽에 10px 패딩 추가**
+    const extraImagePadding = text ? 10 : 0;
+
     // 사용자 지정 크기를 설정하고 왼쪽과 우측 자르기 적용
     const canvasWidth = Math.min(customCanvasWidth, totalWidth - cropLeft - cropRight);
-    const canvasHeight = Math.min(customCanvasHeight, maxHeight + textHeight + 2 * verticalPadding + (text ? runesYOffset : 0));
+    const canvasHeight = Math.min(
+        customCanvasHeight,
+        maxHeight + textHeight + 2 * verticalPadding + (text ? runesYOffset : 0) + extraImagePadding
+    );
 
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
@@ -563,6 +570,11 @@ function exportRunes(type) {
                 currentX += sectionRect.width;
             }
 
+            // **추가된 부분: 텍스트가 있는 경우 이미지 아래쪽에 10px 패딩을 추가**
+            if (text) {
+                currentY += 10; // 10px 패딩 추가
+            }
+
             // 캔버스를 PNG으로 변환하고 다운로드
             ctx.globalAlpha = 1.0; // 불투명도 초기화
             const imgData = canvas.toDataURL('image/png');
@@ -577,6 +589,7 @@ function exportRunes(type) {
 
     drawRunes();
 }
+
 
 // Helper 함수: 특정 컨테이너에 선택된 룬이 있는지 확인
 function hasSelectedRunes(containerId) {
