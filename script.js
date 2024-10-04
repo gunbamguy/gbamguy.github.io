@@ -318,7 +318,7 @@ let customCanvasWidth = 1000; // 기본 내보내기 이미지 너비 (px)
 let customCanvasHeight = 1000; // 기본 내보내기 이미지 높이 (px)
 
 // 왼쪽 및 우측 자르기 설정 변수 추가
-let cropLeft = 100; // 왼쪽에서 자를 픽셀 수 (기본값: 100px)
+let cropLeft = 200; // 왼쪽에서 자를 픽셀 수 (기본값: 100px)
 let cropRight = 100; // 우측에서 자를 픽셀 수 (기본값: 100px)
 
 // 텍스트 위치 조정을 위한 변수 추가
@@ -391,7 +391,7 @@ function exportRunes(type) {
 
     // 캔버스 크기 설정 및 초기화
     let sectionsToExport = [];
-    let totalWidth = 0;
+    let totalWidth = -500;
     let maxHeight = 0;
 
     if (type === 'main') {
